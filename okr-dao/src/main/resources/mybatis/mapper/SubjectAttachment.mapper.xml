@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmb.okr.dao.domain.SubjectAttachment">
+	<resultMap type="SubjectAttachment" id="baseResultMap">
+		<result property="subjectId" column="subject_id"  jdbcType="VARCHAR"/>
+		<result property="attachType" column="attach_type"  jdbcType="VARCHAR"/>
+		<result property="attachName" column="attach_name"  jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="selectSql">
+		SELECT
+			id AS id,
+			<trim prefix="" suffixOverrides=",">
+			subject_id AS subjectId,
+			attach_type AS attachType,
+			attach_name AS attachName,
+			</trim>
+		FROM subject_attachment
+	</sql>
+	
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND id = #{id}
+			</if>
+			<if test="subjectId != null">
+				AND subject_id = #{subjectId}
+			</if>
+			<if test="attachType != null">
+				AND attach_type = #{attachType}
+			</if>
+			<if test="attachName != null">
+				AND attach_name = #{attachName}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="whereSqlPaging">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="param.subjectId != null">
+				AND subject_id = #{param.subjectId}
+			</if>
+			<if test="param.attachType != null">
+				AND attach_type = #{param.attachType}
+			</if>
+			<if test="param.attachName != null">
+				AND attach_name = #{param.attachName}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="updateSql">
+		UPDATE subject_attachment
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="subjectId != null">
+				subject_id = #{subjectId},
+			</if>
+			<if test="attachType != null">
+				attach_type = #{attachType},
+			</if>
+			<if test="attachName != null">
+				attach_name = #{attachName},
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="deleteSql">
+		DELETE from subject_attachment
+	</sql>
+
+	<sql id="insertColume">
+		<trim prefix="" suffixOverrides=",">
+			id,
+			<if test="subjectId != null">
+				subject_id,
+			</if>
+			<if test="attachType != null">
+				attach_type,
+			</if>
+			<if test="attachName != null">
+				attach_name,
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="insertValue">
+		<trim prefix="" suffixOverrides=",">
+			<if test="subjectId != null">
+				#{subjectId},
+			</if>
+			<if test="attachType != null">
+				#{attachType},
+			</if>
+			<if test="attachName != null">
+				#{attachName},
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="pagingSql">
+		<trim prefix="" suffixOverrides=",">
+			<if test="limit != null">
+				limit #{offset},#{limit}
+			</if>
+		</trim>
+	</sql>
+	
+	<insert id="insert" parameterType="SubjectAttachment" >
+		INSERT INTO subject_attachment(
+			<include refid="insertColume"/>
+		) VALUE (
+			<include refid="insertValue"/>
+		)
+	</insert>
+	
+	<update id="update" parameterType="SubjectAttachment">
+		<include refid="updateSql" />
+		<include refid="whereSql" />
+	</update>
+	
+	<delete id="delete" parameterType="SubjectAttachment">
+		<include refid="deleteSql" />
+		<include refid="whereSql" />
+	</delete>
+	
+	<select id="load" parameterType="SubjectAttachment" resultType="SubjectAttachment">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="queryForAll" parameterType="SubjectAttachment" resultType="SubjectAttachment">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="selectCount" parameterType="PagingParam"
+		resultType="Integer">
+		SELECT COUNT(ID) AS count FROM subject
+		<include refid="whereSqlPaging" />
+	</select>
+	
+	<select id="queryForPage" parameterType="PagingParam" resultType="SubjectAttachment">
+		<include refid="selectSql" />
+		<include refid="whereSqlPaging" />
+		<include refid="pagingSql" />
+	</select>
+	
+</mapper>
