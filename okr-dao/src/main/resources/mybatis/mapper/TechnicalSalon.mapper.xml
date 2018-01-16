@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmb.okr.dao.domain.TechnicalSalon">
+	<resultMap type="TechnicalSalon" id="baseResultMap">
+		<result property="name" column="name"  jdbcType="VARCHAR"/>
+		<result property="publishDate" column="publish_date"  jdbcType="DATE"/>
+		<result property="holdDate" column="hold_date"  jdbcType="DATE"/>
+		<result property="previewImage" column="preview_image"  jdbcType="VARCHAR"/>
+		<result property="summaryImage" column="summary_image"  jdbcType="VARCHAR"/>
+		<result property="speechmaker" column="speechmaker"  jdbcType="VARCHAR"/>
+		<result property="descp" column="descp"  jdbcType="VARCHAR"/>
+		<result property="guests" column="guests"  jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="selectSql">
+		SELECT
+			id AS id,
+			<trim prefix="" suffixOverrides=",">
+			name AS name,
+			publish_date AS publishDate,
+			hold_date AS holdDate,
+			preview_image AS previewImage,
+			summary_image AS summaryImage,
+			speechmaker AS speechmaker,
+			descp AS descp,
+			guests AS guests,
+			</trim>
+		FROM technical_salon
+	</sql>
+	
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND id = #{id}
+			</if>
+			<if test="name != null">
+				AND name = #{name}
+			</if>
+			<if test="publishDate != null">
+				AND publish_date = #{publishDate}
+			</if>
+			<if test="holdDate != null">
+				AND hold_date = #{holdDate}
+			</if>
+			<if test="previewImage != null">
+				AND preview_image = #{previewImage}
+			</if>
+			<if test="summaryImage != null">
+				AND summary_image = #{summaryImage}
+			</if>
+			<if test="speechmaker != null">
+				AND speechmaker = #{speechmaker}
+			</if>
+			<if test="descp != null">
+				AND descp = #{descp}
+			</if>
+			<if test="guests != null">
+				AND guests = #{guests}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="whereSqlPaging">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="param.name != null">
+				AND name = #{param.name}
+			</if>
+			<if test="param.publishDate != null">
+				AND publish_date = #{param.publishDate}
+			</if>
+			<if test="param.holdDate != null">
+				AND hold_date = #{param.holdDate}
+			</if>
+			<if test="param.previewImage != null">
+				AND preview_image = #{param.previewImage}
+			</if>
+			<if test="param.summaryImage != null">
+				AND summary_image = #{param.summaryImage}
+			</if>
+			<if test="param.speechmaker != null">
+				AND speechmaker = #{param.speechmaker}
+			</if>
+			<if test="param.descp != null">
+				AND descp = #{param.descp}
+			</if>
+			<if test="param.guests != null">
+				AND guests = #{param.guests}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="updateSql">
+		UPDATE technical_salon
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="publishDate != null">
+				publish_date = #{publishDate},
+			</if>
+			<if test="holdDate != null">
+				hold_date = #{holdDate},
+			</if>
+			<if test="previewImage != null">
+				preview_image = #{previewImage},
+			</if>
+			<if test="summaryImage != null">
+				summary_image = #{summaryImage},
+			</if>
+			<if test="speechmaker != null">
+				speechmaker = #{speechmaker},
+			</if>
+			<if test="descp != null">
+				descp = #{descp},
+			</if>
+			<if test="guests != null">
+				guests = #{guests},
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="deleteSql">
+		DELETE from technical_salon
+	</sql>
+
+	<sql id="insertColume">
+		<trim prefix="" suffixOverrides=",">
+			id,
+			<if test="name != null">
+				name,
+			</if>
+			<if test="publishDate != null">
+				publish_date,
+			</if>
+			<if test="holdDate != null">
+				hold_date,
+			</if>
+			<if test="previewImage != null">
+				preview_image,
+			</if>
+			<if test="summaryImage != null">
+				summary_image,
+			</if>
+			<if test="speechmaker != null">
+				speechmaker,
+			</if>
+			<if test="descp != null">
+				descp,
+			</if>
+			<if test="guests != null">
+				guests,
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="insertValue">
+		<trim prefix="" suffixOverrides=",">
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="publishDate != null">
+				#{publishDate},
+			</if>
+			<if test="holdDate != null">
+				#{holdDate},
+			</if>
+			<if test="previewImage != null">
+				#{previewImage},
+			</if>
+			<if test="summaryImage != null">
+				#{summaryImage},
+			</if>
+			<if test="speechmaker != null">
+				#{speechmaker},
+			</if>
+			<if test="descp != null">
+				#{descp},
+			</if>
+			<if test="guests != null">
+				#{guests},
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="pagingSql">
+		<trim prefix="" suffixOverrides=",">
+			<if test="limit != null">
+				limit #{offset},#{limit}
+			</if>
+		</trim>
+	</sql>
+	
+	<insert id="insert" parameterType="TechnicalSalon" >
+		INSERT INTO technical_salon(
+			<include refid="insertColume"/>
+		) VALUE (
+			<include refid="insertValue"/>
+		)
+	</insert>
+	
+	<update id="update" parameterType="TechnicalSalon">
+		<include refid="updateSql" />
+		<include refid="whereSql" />
+	</update>
+	
+	<delete id="delete" parameterType="TechnicalSalon">
+		<include refid="deleteSql" />
+		<include refid="whereSql" />
+	</delete>
+	
+	<select id="load" parameterType="TechnicalSalon" resultType="TechnicalSalon">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="queryForAll" parameterType="TechnicalSalon" resultType="TechnicalSalon">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="selectCount" parameterType="PagingParam"
+		resultType="Integer">
+		SELECT COUNT(ID) AS count FROM subject
+		<include refid="whereSqlPaging" />
+	</select>
+	
+	<select id="queryForPage" parameterType="PagingParam" resultType="TechnicalSalon">
+		<include refid="selectSql" />
+		<include refid="whereSqlPaging" />
+		<include refid="pagingSql" />
+	</select>
+	
+</mapper>
