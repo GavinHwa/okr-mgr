@@ -1,27 +1,45 @@
 package com.cmb.okr.api.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.io.FileUtils;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cmb.okr.api.BaseController;
+import com.cmb.okr.attachment.AttachmentService;
+import com.cmb.okr.frame.base.JsonResponse;
+import com.cmb.okr.frame.exception.AppException;
+
 @RequestMapping("/file")
-@Controller
-public class FileController {
+@RestController
+public class FileController extends BaseController {
+
+	@Autowired
+	private AttachmentService attachmentService;
 
 	@RequestMapping("/upload")
-	public void upload(@RequestParam("file") MultipartFile file) {
-		try {
-			InputStream is = file.getInputStream();
-			FileUtils.copyInputStreamToFile(is, new File("D://TFILE"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public JsonResponse upload(@RequestParam("file") MultipartFile file) {
+		return doBusiness((res) -> {
+			InputStream is;
+			try {
+				is = file.getInputStream();
+			} catch (Exception e) {
+				throw new AppException(e);
+			}
+			String id = attachmentService.putObject(file.getOriginalFilename(), is);
+			res.setResult(id);
+		}, "文件上传失败");
+	}
+
+	@RequestMapping(value = "/url", method = RequestMethod.GET)
+	public JsonResponse getUrl(@RequestParam("id") String id) {
+		return doBusiness((res) -> {
+			res.setResult(attachmentService.getUrl(id));
+		}, "获取资源url失败");
 	}
 
 }

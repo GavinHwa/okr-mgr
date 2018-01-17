@@ -23,6 +23,10 @@ public class OSSConfig {
 	// Bucket命名规范如下：只能包括小写字母，数字和短横线（-），必须以小写字母或者数字开头，长度必须在3-63字节之间。
 	private String bucketName = "okr-bucket";
 
+	// 生成url时该url的失效时间 单位（秒）
+	// 默认设置为60分钟失效
+	private int expiretime = 3600;
+
 	public String getEndpoint() {
 		return endpoint;
 	}
@@ -53,5 +57,13 @@ public class OSSConfig {
 
 	public void setBucketName(String bucketName) {
 		this.bucketName = bucketName;
+	}
+
+	public int getExpiretime() {
+		return expiretime;
+	}
+
+	public void setExpiretime(int expiretime) {
+		this.expiretime = expiretime;
 	}
 }
