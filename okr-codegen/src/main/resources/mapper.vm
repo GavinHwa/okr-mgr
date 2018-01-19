@@ -99,7 +99,7 @@
 	
 	<update id="update" parameterType="${entity.clazzName}">
 		<include refid="updateSql" />
-		<include refid="whereSql" />
+		WHERE ID = #{id}
 	</update>
 	
 	<delete id="delete" parameterType="${entity.clazzName}">
