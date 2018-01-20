@@ -11,11 +11,28 @@ public class OkrConfig {
 	 */
 	private int sessionExpireSeconds = 60 * 30;
 
+	/**
+	 * 初始密码 默认123456
+	 */
+	private String initPassword = "123456";
+
+	public long getSessionExpireMills() {
+		return this.sessionExpireSeconds * 1000;
+	}
+
 	public int getSessionExpireSeconds() {
 		return sessionExpireSeconds;
 	}
 
 	public void setSessionExpireSeconds(int sessionExpireSeconds) {
 		this.sessionExpireSeconds = sessionExpireSeconds;
+	}
+
+	public String getInitPassword() {
+		return initPassword;
+	}
+
+	public void setInitPassword(String initPassword) {
+		this.initPassword = initPassword;
 	}
 }

@@ -30,7 +30,7 @@ public class SessionBean {
 	}
 
 	public void setExpire(long expire) {
-		this.expire = expire;
+		this.expire = expire + System.currentTimeMillis();
 	}
 
 	public String getAuthCodes() {

@@ -35,6 +35,17 @@ public class AuthService {
 		return StringUtils.join(codeList, ",");
 	}
 
+	public void changePwd(User user, String newPwd) {
+		String salt = StringUtils.isEmpty(user.getSalt()) ? SecurityUtils.getSalt(user.getYstCode()) : user.getSalt();
+
+		String pwd = SecurityUtils.getPassphrase(salt, newPwd);
+		User entity = new User();
+		entity.setId(user.getId());
+		user.setSalt(salt);
+		user.setPassword(pwd);
+		this.updateUser(user);
+	}
+
 	public void updateUser(User user) {
 		this.baseDao.update(user);
 	}
@@ -69,5 +80,11 @@ public class AuthService {
 		userQuery.setYstCode(ystCode);
 		User u = baseDao.load(userQuery);
 		return u;
+	}
+
+	public User loadUserById(String id) {
+		User uq = new User();
+		uq.setId(id);
+		return baseDao.load(uq);
 	}
 }
