@@ -3,7 +3,9 @@ package com.cmb.okr.api;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableScheduling
 @SpringBootApplication
 @ComponentScan({ "com.cmb.okr.api", "com.cmb.okr.frame", "com.cmb.okr.service", "com.cmb.okr.attachment" })
 public class OkrApp {

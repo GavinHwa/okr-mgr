@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmb.okr.dao.domain.Auth">
+	<resultMap type="Auth" id="baseResultMap">
+		<result property="authCode" column="auth_code"  jdbcType="VARCHAR"/>
+		<result property="authDescp" column="auth_descp"  jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="selectSql">
+		SELECT
+			id AS id,
+			<trim prefix="" suffixOverrides=",">
+			auth_code AS authCode,
+			auth_descp AS authDescp,
+			</trim>
+		FROM auth
+	</sql>
+	
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND id = #{id}
+			</if>
+			<if test="authCode != null">
+				AND auth_code = #{authCode}
+			</if>
+			<if test="authDescp != null">
+				AND auth_descp = #{authDescp}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="whereSqlPaging">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="param.authCode != null">
+				AND auth_code = #{param.authCode}
+			</if>
+			<if test="param.authDescp != null">
+				AND auth_descp = #{param.authDescp}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="updateSql">
+		UPDATE auth
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="authCode != null">
+				auth_code = #{authCode},
+			</if>
+			<if test="authDescp != null">
+				auth_descp = #{authDescp},
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="deleteSql">
+		DELETE from auth
+	</sql>
+
+	<sql id="insertColume">
+		<trim prefix="" suffixOverrides=",">
+			id,
+			<if test="authCode != null">
+				auth_code,
+			</if>
+			<if test="authDescp != null">
+				auth_descp,
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="insertValue">
+		<trim prefix="" suffixOverrides=",">
+			<if test="authCode != null">
+				#{authCode},
+			</if>
+			<if test="authDescp != null">
+				#{authDescp},
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="pagingSql">
+		<trim prefix="" suffixOverrides=",">
+			<if test="limit != null">
+				limit #{offset},#{limit}
+			</if>
+		</trim>
+	</sql>
+	
+	<insert id="insert" parameterType="Auth" >
+		INSERT INTO auth(
+			<include refid="insertColume"/>
+		) VALUE (
+			<include refid="insertValue"/>
+		)
+	</insert>
+	
+	<update id="update" parameterType="Auth">
+		<include refid="updateSql" />
+		WHERE ID = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="Auth">
+		<include refid="deleteSql" />
+		<include refid="whereSql" />
+	</delete>
+	
+	<select id="load" parameterType="Auth" resultType="Auth">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="queryForAll" parameterType="Auth" resultType="Auth">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="selectCount" parameterType="PagingParam"
+		resultType="Integer">
+		SELECT COUNT(ID) AS count FROM subject
+		<include refid="whereSqlPaging" />
+	</select>
+	
+	<select id="queryForPage" parameterType="PagingParam" resultType="Auth">
+		<include refid="selectSql" />
+		<include refid="whereSqlPaging" />
+		<include refid="pagingSql" />
+	</select>
+	
+</mapper>
