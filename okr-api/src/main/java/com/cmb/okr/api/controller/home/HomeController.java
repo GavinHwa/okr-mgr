@@ -135,6 +135,14 @@ public class HomeController extends BaseController {
 
 		}, "密码重置失败");
 	}
+
+	@ApiOperation(value = "注销", notes = "")
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	public JsonResponse logout(HttpServletRequest request) {
+		return doBusiness((res) -> {
+			ContextUtils.logOut(request);
+		}, "注销失败");
+	}
 	// 修改头像 TODO
 
 }

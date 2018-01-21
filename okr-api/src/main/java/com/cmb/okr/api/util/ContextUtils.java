@@ -49,4 +49,17 @@ public class ContextUtils {
 		return (User) session.getUser();
 	}
 
+	/**
+	 * 注销
+	 * 
+	 * @param request
+	 */
+	public static void logOut(HttpServletRequest request) {
+		String token = getToken(request);
+		if (StringUtils.isEmpty(token)) {
+			return;
+		}
+		OkrContext.sessions.remove(token);
+	}
+
 }
