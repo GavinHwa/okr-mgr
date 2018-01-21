@@ -15,6 +15,7 @@ import com.alibaba.druid.util.StringUtils;
 import com.cmb.okr.api.BaseController;
 import com.cmb.okr.api.util.ContextUtils;
 import com.cmb.okr.dao.domain.User;
+import com.cmb.okr.frame.auth.AuthRequired;
 import com.cmb.okr.frame.auth.LoginRequired;
 import com.cmb.okr.frame.auth.OkrContext;
 import com.cmb.okr.frame.auth.SessionBean;
@@ -117,7 +118,7 @@ public class HomeController extends BaseController {
 		}, "修改密码失败");
 	}
 
-	// @AuthRequired("a001")
+	@AuthRequired("a001")
 	@ApiOperation(value = "重置密码", notes = "")
 	@ApiImplicitParam(paramType = "path", required = true, name = "userId")
 	@RequestMapping(value = "/resetpwd/{userId}", method = RequestMethod.POST)
