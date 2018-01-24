@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.druid.util.StringUtils;
 import com.cmb.okr.api.BaseController;
 import com.cmb.okr.api.util.ContextUtils;
-import com.cmb.okr.dao.domain.User;
+import com.cmb.okr.dao.domain.auth.User;
 import com.cmb.okr.frame.auth.AuthRequired;
 import com.cmb.okr.frame.auth.LoginRequired;
 import com.cmb.okr.frame.auth.OkrContext;

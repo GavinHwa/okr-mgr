@@ -16,6 +16,11 @@ public class OkrConfig {
 	 */
 	private String initPassword = "123456";
 
+	/**
+	 * 首页轮播图数量 默认3张
+	 */
+	private int hlNum = 3;
+
 	public long getSessionExpireMills() {
 		return this.sessionExpireSeconds * 1000;
 	}
@@ -34,5 +39,13 @@ public class OkrConfig {
 
 	public void setInitPassword(String initPassword) {
 		this.initPassword = initPassword;
+	}
+
+	public int getHlNum() {
+		return hlNum;
+	}
+
+	public void setHlNum(int hlNum) {
+		this.hlNum = hlNum;
 	}
 }

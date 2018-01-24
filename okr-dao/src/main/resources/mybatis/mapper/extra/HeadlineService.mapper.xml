@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmb.okr.service.headline.HeadlineService">
+	
+	<sql id="pagingSql">
+		<trim prefix="" suffixOverrides=",">
+			<if test="limit != null">
+				limit #{offset},#{limit}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="whereSqlPaging">
+		where is_valid = 1 
+		<trim prefixOverrides="AND">
+			<if test="param.type != null">
+				AND type = #{param.type}
+			</if>
+		</trim>
+		ORDER BY rank asc,create_time desc
+	</sql>
+
+	<select id="selectBannerList" parameterType="int" resultType="Map">
+		select id,type,
+		related_id as relatedId,
+		image_id as imageId,
+		rank from
+		headline where is_valid = 1
+		order by rank asc,create_time desc
+		limit
+		0,#{limit}
+	</select>
+
+	<select id="countForPage" parameterType="PagingParam"
+		resultType="Integer">
+		SELECT COUNT(1) AS count FROM headline
+		<include refid="whereSqlPaging" />
+	</select>
+
+	<select id="queryForPage" parameterType="PagingParam"
+		resultType="Map">
+		select id,type,
+		related_id as relatedId,
+		image_id as imageId,
+		rank,
+		is_valid as isValid,
+		create_time as createTime,
+		create_id as createId 
+		from headline
+		<include refid="whereSqlPaging" />
+		<include refid="pagingSql" />
+	</select>
+
+</mapper>

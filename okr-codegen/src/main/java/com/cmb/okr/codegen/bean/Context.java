@@ -217,6 +217,10 @@ public class Context {
 		if (type.equals("int")) {
 			return "Integer";
 		}
+		
+		if (type.equals("bit")) {
+			return "Integer";
+		}
 
 		if (type.equals("tinyint")) {
 			return "Integer";
@@ -264,6 +268,9 @@ public class Context {
 		if (type.equals("tinyint")) {
 			return "TINYINT";
 		}
+		if (type.equals("bit")) {
+			return "INTEGER";
+		}
 		if (type.equals("datetime")) {
 			return "DATE";
 		}
@@ -289,8 +296,7 @@ public class Context {
 		/*
 		 * || "createId".equalsIgnoreCase(filedName) ||
 		 */
-		if ("id".equalsIgnoreCase(filedName) || "createTime".equalsIgnoreCase(filedName)
-				|| "lastModifyTime".equalsIgnoreCase(filedName) || "autoIncId".equalsIgnoreCase(filedName)) {
+		if ("id".equalsIgnoreCase(filedName)) {
 			return false;
 		}
 		return true;

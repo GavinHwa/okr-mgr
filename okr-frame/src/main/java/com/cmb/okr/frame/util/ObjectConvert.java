@@ -14,6 +14,32 @@ import com.cmb.okr.frame.exception.AppException;
 public class ObjectConvert {
 	private static Logger logger = LoggerFactory.getLogger(ObjectConvert.class);
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private static <T> T convert(Map<String, Object> source, Class<T> target) {
+		try {
+			T result = target.newInstance();
+			for (String colName : source.keySet()) {
+				Object val = source.get(colName);
+				Field field = ReflectUtils.findField(target, colName);
+				if (field == null) {
+					continue;
+				}
+				// 如果参数是枚举类则需要特殊处理
+				if(field.getType().isEnum()){
+					String clazzName = field.getType().getName();
+					Class<Enum> clazz = (Class<Enum>) Class.forName(clazzName);
+					val = Enum.valueOf(clazz, (String)val);
+				}
+				field.setAccessible(true);
+				field.set(result, val);
+			}
+			return result;
+		} catch (Exception e) {
+			logger.error(String.format("convert Object : %s failed", target));
+			throw new AppException("对象转换失败");
+		}
+	}
+
 	/**
 	 * 对象转换
 	 * 

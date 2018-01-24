@@ -1,6 +1,6 @@
 package com.cmb.okr.api.controller.home;
 
-import com.cmb.okr.dao.domain.User;
+import com.cmb.okr.dao.domain.auth.User;
 
 public class LoginResponse {
 

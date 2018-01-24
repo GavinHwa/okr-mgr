@@ -6,6 +6,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${entity.packageName}.${entity.clazzName}">
 	<resultMap type="${entity.clazzName}" id="baseResultMap">
+	<result property="id" column="id"  jdbcType="VARCHAR"/>
 #foreach($field in $mapper.fields)
 		<result property="${field.property}" column="${field.col}"  jdbcType="${field.jdbcType}"/>
 #end
@@ -73,6 +74,9 @@
 
 	<sql id="insertValue">
 		<trim prefix="" suffixOverrides=",">
+		<if test="id != null">
+				#{id},
+			</if>
 #foreach($field in $mapper.fields)
 			<if test="${field.property} != null">
 				#{${field.property}},
@@ -117,9 +121,15 @@
 		<include refid="whereSql" />
 	</select>
 	
-	<select id="selectCount" parameterType="PagingParam"
+	<select id="selectCount" parameterType="${entity.clazzName}"
 		resultType="Integer">
-		SELECT COUNT(ID) AS count FROM subject
+		SELECT COUNT(1) AS count FROM ${mapper.tableName}
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="countForPage" parameterType="PagingParam"
+		resultType="Integer">
+		SELECT COUNT(1) AS count FROM ${mapper.tableName}
 		<include refid="whereSqlPaging" />
 	</select>
 	

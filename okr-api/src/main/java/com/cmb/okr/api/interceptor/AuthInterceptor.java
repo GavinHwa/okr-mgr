@@ -9,7 +9,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cmb.okr.api.util.ContextUtils;
-import com.cmb.okr.dao.domain.User;
+import com.cmb.okr.dao.domain.auth.User;
 import com.cmb.okr.dao.enums.UserType;
 import com.cmb.okr.frame.auth.AuthRequired;
 import com.cmb.okr.frame.auth.LoginRequired;
@@ -17,7 +17,7 @@ import com.cmb.okr.frame.auth.OkrContext;
 import com.cmb.okr.frame.auth.SessionBean;
 import com.cmb.okr.frame.config.OkrConfig;
 import com.cmb.okr.frame.exception.AppException;
-import com.cmb.okr.frame.util.SpringHelper;
+import com.cmb.okr.frame.util.bean.SpringHelper;
 
 public class AuthInterceptor implements HandlerInterceptor {
 
@@ -54,7 +54,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 			throw new AppException("无权限访问");
 		}
 		// 重新设置session的失效时间
-		session.setExpire(SpringHelper.getBean(OkrConfig.class).getSessionExpireMills());
+		session.setExpire(SpringHelper.getBean("okrConfig", OkrConfig.class).getSessionExpireMills());
 		return true;
 	}
 

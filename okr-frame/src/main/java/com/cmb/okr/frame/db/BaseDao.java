@@ -44,12 +44,23 @@ public class BaseDao extends SqlSessionDaoSupport {
 	private static final String LOAD_SUFFIX = "load";
 	private static final String QUERYALL_SUFFIX = "queryForAll";
 	private static final String PAGE_QUERY_SUFFIX = "queryForPage";
-	private static final String PAGE_COUNT_SUFFIX = "selectCount";
+	private static final String PAGE_COUNT_SUFFIX = "countForPage";
+	private static final String SELECT_COUNT_SUFFIX = "selectCount";
 
 	private static final String NOT_NULL_MSG = "数据不能为null";
 
 	private void assertNotNull(Object entity) {
 		Assert.notNull(entity, NOT_NULL_MSG);
+	}
+
+	public int selectCount(String sqlId, Object entity) {
+		this.assertNotNull(entity);
+		return getSqlSession().selectOne(sqlId, entity);
+	}
+
+	public int selectCount(Object entity) {
+		String sqlId = this.genSqlId(entity.getClass(), SELECT_COUNT_SUFFIX);
+		return this.selectCount(sqlId, entity);
 	}
 
 	public int insert(String sqlId, Object entity) {
@@ -133,7 +144,7 @@ public class BaseDao extends SqlSessionDaoSupport {
 		return queryForPage(countSql, queryId, pagingParam);
 	}
 
-	public <T> PagingResult<T> queryForPage(String countSqlId, String querySqlId, PagingParam<T> pagingParam) {
+	public <T> PagingResult<T> queryForPage(String countSqlId, String querySqlId, PagingParam<?> pagingParam) {
 		assertNotNull(pagingParam);
 		assertNotNull(pagingParam.getParam());
 		PagingResult<T> result = new PagingResult<>();
@@ -141,7 +152,7 @@ public class BaseDao extends SqlSessionDaoSupport {
 		List<T> rst = this.getSqlSession().selectList(querySqlId, pagingParam);
 		result.setResult(rst);
 		result.setTotalNum(count);
-		result.setTotalPage(pagingParam.getPageSize());
+		result.initTotalPage(pagingParam.getPageSize());
 		return result;
 	}
 

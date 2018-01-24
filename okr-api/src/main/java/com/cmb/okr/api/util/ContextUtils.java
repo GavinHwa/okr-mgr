@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 
 import com.cmb.okr.api.constants.ApiConstants;
-import com.cmb.okr.dao.domain.User;
+import com.cmb.okr.dao.domain.auth.User;
 import com.cmb.okr.frame.auth.OkrContext;
 import com.cmb.okr.frame.auth.SessionBean;
 

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.druid.util.StringUtils;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
@@ -80,7 +81,11 @@ public class AttachmentService {
 	 * @return
 	 */
 	public String getUrl(String id) {
-		return ossClient.generatePresignedUrl(ossConfig.getBucketName(), id, DateUtils.addSeconds(new Date(), 3600))
+		if (StringUtils.isEmpty(id)) {
+			return null;
+		}
+		return ossClient
+				.generatePresignedUrl(ossConfig.getBucketName(), id, DateUtils.addSeconds(new Date(), 60 * 60 * 12))
 				.toString();
 	}
 }

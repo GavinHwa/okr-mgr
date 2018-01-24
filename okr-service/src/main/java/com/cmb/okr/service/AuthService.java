@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.cmb.okr.dao.domain.User;
+import com.cmb.okr.dao.domain.auth.User;
 import com.cmb.okr.frame.db.BaseDao;
 import com.cmb.okr.frame.security.SecurityUtils;
+import com.cmb.okr.frame.util.AppValidator;
 
 @Component
 public class AuthService {
@@ -71,13 +72,19 @@ public class AuthService {
 	/**
 	 * 通过登录信息获取用户
 	 * 
+	 * 支持手机号和登录名登录
+	 * 
 	 * @param ystCode
 	 * @return
 	 */
-	public User loadUser(String ystCode) {
+	public User loadUser(String loginName) {
 		// 以移事通账号为登录名查询用户
 		User userQuery = new User();
-		userQuery.setYstCode(ystCode);
+		if (AppValidator.isMobile(loginName)) {
+			userQuery.setPhone(loginName);
+		} else {
+			userQuery.setLoginName(loginName);
+		}
 		User u = baseDao.load(userQuery);
 		return u;
 	}
