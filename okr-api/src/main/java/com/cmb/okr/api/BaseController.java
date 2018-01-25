@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
 import com.cmb.okr.frame.base.JsonResponse;
+import com.cmb.okr.frame.exception.AppException;
 
 /**
  * controller 基类
@@ -28,9 +29,12 @@ public class BaseController {
 		try {
 			callback.doBusiness(res);
 		} catch (Exception e) {
+			res.setMsg(msg);
+			if(e instanceof AppException){
+				res.setMsg(e.getMessage());
+			}
 			res.setCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
 			logger.error(msg, e);
-			res.setMsg(msg);
 		}
 		return res;
 	}

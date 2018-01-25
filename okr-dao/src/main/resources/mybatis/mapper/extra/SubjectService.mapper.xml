@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmb.okr.service.subject.SubjectService">
+	<resultMap type="Subject" id="baseResultMap">
+		<result property="id" column="id" jdbcType="VARCHAR" />
+		<result property="name" column="name" jdbcType="VARCHAR" />
+		<result property="briefContent" column="brief_content"
+			jdbcType="VARCHAR" />
+		<result property="content" column="content" jdbcType="VARCHAR" />
+		<result property="icon" column="icon" jdbcType="VARCHAR" />
+		<result property="leaderId" column="leader_id" jdbcType="VARCHAR" />
+		<result property="status" column="status" jdbcType="VARCHAR" />
+		<result property="type" column="type" jdbcType="VARCHAR" />
+		<result property="startupDate" column="startup_date" jdbcType="DATE" />
+		<result property="createId" column="create_id" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" jdbcType="DATE" />
+	</resultMap>
+
+	<sql id="whereSqlPaging">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="param.name != null">
+				AND a0.name like '%${name}%'
+			</if>
+			<if test="param.briefContent != null">
+				AND a0.brief_content like '%${briefContent}%'
+			</if>
+			<if test="param.leaderId != null">
+				AND a0.leader_id = #{param.leaderId}
+			</if>
+			<if test="param.status != null">
+				AND a0.status = #{param.status}
+			</if>
+			<if test="param.type != null">
+				AND a0.type = #{param.type}
+			</if>
+			<if test="param.startupDateBegin != null">
+				AND a0.startup_date <![CDATA[>=]]>
+				#{param.startupDateBegin}
+			</if>
+			<if test="param.startupDateEnd != null">
+				AND a0.startup_date <![CDATA[<]]>
+				#{param.startupDateEnd}
+			</if>
+			<if test="param.createId != null">
+				AND a0.create_id = #{param.createId}
+			</if>
+			<if test="param.createTimeBegin != null">
+				AND a0.create_time <![CDATA[>=]]>
+				#{param.createTimeBegin}
+			</if>
+			<if test="param.createTimeEnd != null">
+				AND a0.create_time <![CDATA[<]]>
+				#{param.createTimeEnd}
+			</if>
+			<if test="param.leaderName != null">
+				AND a1.name like '%${leaderName}%'
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="pagingSql">
+		<trim prefix="" suffixOverrides=",">
+			<if test="limit != null">
+				limit #{offset},#{limit}
+			</if>
+		</trim>
+	</sql>
+
+	<select id="countForPage" parameterType="PagingParam"
+		resultType="Integer">
+		SELECT COUNT(1) AS count FROM subject
+		<include refid="whereSqlPaging" />
+	</select>
+
+	<select id="queryForPage" parameterType="PagingParam"
+		resultType="Map">
+		select a0.id as id,
+		a0.name as name,
+		a0.brief_content as briefContent,
+		a0.icon as icon,
+		a0.leader_id as leaderId,
+		a1.name as leaderName,
+		a0.status as status,
+		a0.type AS type,
+		a0.startup_date AS startupDate,
+		a0.create_id AS createId,
+		a0.create_time AS createTime
+		from subject a0
+		left join user a1 on a0.leader_id =	a1.id
+		<include refid="whereSqlPaging" />
+		<include refid="pagingSql" />
+	</select>
+
+	<select id="loadSubjectDetail" parameterType="String"
+		resultType="Map">
+		select a0.id as id,
+		a0.name as name,
+		a0.brief_content as
+		briefContent,
+		a0.content as content,
+		a0.icon as icon,
+		a0.leader_id as leaderId,
+		a1.name as leaderName,
+		a0.status as status,
+		a0.type AS type,
+		a0.startup_date AS startupDate,
+		a0.create_id AS createId,
+		a0.create_time AS createTime
+		from subject a0 left join user a1 on
+		a0.leader_id =
+		a1.id
+		where a0.id = #{id}
+	</select>
+	
+	<select id="checkNameExists" parameterType="Subject" resultType="Integer">
+		select count(1) from subject where name = #{name}
+		<trim prefix="" suffixOverrides="AND">
+			<if test="id != null">
+				AND id != #{id}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="loadForCheck" parameterType="Subject" resultType="Subject">
+		select id,leader_id as leaderId,name,status,type from subject
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND id = #{id}
+			</if>
+			<if test="name != null">
+				AND name = #{name}
+			</if>
+			<if test="leaderId != null">
+				AND leader_id = #{leaderId}
+			</if>
+			<if test="status != null">
+				AND status = #{status}
+			</if>
+			<if test="type != null">
+				AND type = #{type}
+			</if>
+		</trim>
+	</select>
+	
+	<update id="quitSubject" parameterType="SubjectParticipant">
+		UPDATE subject_participant
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="isQuit != null">
+				is_quit = #{isQuit},
+			</if>
+			<if test="quitDate != null">
+				quitDate = #{quitDate},
+			</if>
+			<if test="quitRemark != null">
+				quitRemark = #{quitRemark},
+			</if>
+		</trim>
+		where user_id = #{userId} and subject_id = #{subjectId}
+	</update>
+
+</mapper>

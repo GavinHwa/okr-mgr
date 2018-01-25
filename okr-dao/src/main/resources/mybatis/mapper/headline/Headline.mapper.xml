@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmb.okr.dao.domain.headline.Headline">
+	<resultMap type="Headline" id="baseResultMap">
+	<result property="id" column="id"  jdbcType="VARCHAR"/>
+		<result property="type" column="type"  jdbcType="VARCHAR"/>
+		<result property="relatedId" column="related_id"  jdbcType="VARCHAR"/>
+		<result property="imageId" column="image_id"  jdbcType="VARCHAR"/>
+		<result property="rank" column="rank"  jdbcType="INTEGER"/>
+		<result property="isValid" column="is_valid"  jdbcType="INTEGER"/>
+		<result property="createTime" column="create_time"  jdbcType="DATE"/>
+		<result property="createId" column="create_id"  jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="selectSql">
+		SELECT
+			id AS id,
+			<trim prefix="" suffixOverrides=",">
+			type AS type,
+			related_id AS relatedId,
+			image_id AS imageId,
+			rank AS rank,
+			is_valid AS isValid,
+			create_time AS createTime,
+			create_id AS createId,
+			</trim>
+		FROM headline
+	</sql>
+	
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND id = #{id}
+			</if>
+			<if test="type != null">
+				AND type = #{type}
+			</if>
+			<if test="relatedId != null">
+				AND related_id = #{relatedId}
+			</if>
+			<if test="imageId != null">
+				AND image_id = #{imageId}
+			</if>
+			<if test="rank != null">
+				AND rank = #{rank}
+			</if>
+			<if test="isValid != null">
+				AND is_valid = #{isValid}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime}
+			</if>
+			<if test="createId != null">
+				AND create_id = #{createId}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="whereSqlPaging">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="param.type != null">
+				AND type = #{param.type}
+			</if>
+			<if test="param.relatedId != null">
+				AND related_id = #{param.relatedId}
+			</if>
+			<if test="param.imageId != null">
+				AND image_id = #{param.imageId}
+			</if>
+			<if test="param.rank != null">
+				AND rank = #{param.rank}
+			</if>
+			<if test="param.isValid != null">
+				AND is_valid = #{param.isValid}
+			</if>
+			<if test="param.createTime != null">
+				AND create_time = #{param.createTime}
+			</if>
+			<if test="param.createId != null">
+				AND create_id = #{param.createId}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="updateSql">
+		UPDATE headline
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="relatedId != null">
+				related_id = #{relatedId},
+			</if>
+			<if test="imageId != null">
+				image_id = #{imageId},
+			</if>
+			<if test="rank != null">
+				rank = #{rank},
+			</if>
+			<if test="isValid != null">
+				is_valid = #{isValid},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="createId != null">
+				create_id = #{createId},
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="deleteSql">
+		DELETE from headline
+	</sql>
+
+	<sql id="insertColume">
+		<trim prefix="" suffixOverrides=",">
+			id,
+			<if test="type != null">
+				type,
+			</if>
+			<if test="relatedId != null">
+				related_id,
+			</if>
+			<if test="imageId != null">
+				image_id,
+			</if>
+			<if test="rank != null">
+				rank,
+			</if>
+			<if test="isValid != null">
+				is_valid,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createId != null">
+				create_id,
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="insertValue">
+		<trim prefix="" suffixOverrides=",">
+		<if test="id != null">
+				#{id},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="relatedId != null">
+				#{relatedId},
+			</if>
+			<if test="imageId != null">
+				#{imageId},
+			</if>
+			<if test="rank != null">
+				#{rank},
+			</if>
+			<if test="isValid != null">
+				#{isValid},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="createId != null">
+				#{createId},
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="pagingSql">
+		<trim prefix="" suffixOverrides=",">
+			<if test="limit != null">
+				limit #{offset},#{limit}
+			</if>
+		</trim>
+	</sql>
+	
+	<insert id="insert" parameterType="Headline" >
+		INSERT INTO headline(
+			<include refid="insertColume"/>
+		) VALUE (
+			<include refid="insertValue"/>
+		)
+	</insert>
+	
+	<update id="update" parameterType="Headline">
+		<include refid="updateSql" />
+		WHERE ID = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="Headline">
+		<include refid="deleteSql" />
+		<include refid="whereSql" />
+	</delete>
+	
+	<select id="load" parameterType="Headline" resultType="Headline">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="queryForAll" parameterType="Headline" resultType="Headline">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="selectCount" parameterType="Headline"
+		resultType="Integer">
+		SELECT COUNT(1) AS count FROM headline
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="countForPage" parameterType="PagingParam"
+		resultType="Integer">
+		SELECT COUNT(1) AS count FROM headline
+		<include refid="whereSqlPaging" />
+	</select>
+	
+	<select id="queryForPage" parameterType="PagingParam" resultType="Headline">
+		<include refid="selectSql" />
+		<include refid="whereSqlPaging" />
+		<include refid="pagingSql" />
+	</select>
+	
+</mapper>

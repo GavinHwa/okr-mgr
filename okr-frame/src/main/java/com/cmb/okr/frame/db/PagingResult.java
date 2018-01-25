@@ -26,12 +26,24 @@ public class PagingResult<T> {
 	 */
 	private List<T> result;
 
+	public <E> PagingResult<E> copy(List<E> result) {
+		PagingResult<E> response = new PagingResult<>();
+		response.setResult(result);
+		response.setTotalNum(this.totalNum);
+		response.setTotalPage(this.getTotalPage());
+		return response;
+	}
+	
+	public void initTotalPage(int pageSize){
+		this.totalPage = totalNum % pageSize == 0 ? totalNum / pageSize : totalNum / pageSize + 1;
+	}
+
 	public int getTotalPage() {
 		return this.totalPage;
 	}
 
-	public void setTotalPage(int pageSize) {
-		this.totalPage = totalNum % pageSize == 0 ? totalNum / pageSize : totalNum / pageSize + 1;
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
 	}
 
 	public int getTotalNum() {
