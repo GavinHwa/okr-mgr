@@ -120,5 +120,42 @@
 			</if>
 		</trim>
 	</select>
+	
+	<select id="loadForCheck" parameterType="Subject" resultType="Subject">
+		select id,leader_id as leaderId,name,status,type from subject
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND id = #{id}
+			</if>
+			<if test="name != null">
+				AND name = #{name}
+			</if>
+			<if test="leaderId != null">
+				AND leader_id = #{leaderId}
+			</if>
+			<if test="status != null">
+				AND status = #{status}
+			</if>
+			<if test="type != null">
+				AND type = #{type}
+			</if>
+		</trim>
+	</select>
+	
+	<update id="quitSubject" parameterType="SubjectParticipant">
+		UPDATE subject_participant
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="isQuit != null">
+				is_quit = #{isQuit},
+			</if>
+			<if test="quitDate != null">
+				quitDate = #{quitDate},
+			</if>
+			<if test="quitRemark != null">
+				quitRemark = #{quitRemark},
+			</if>
+		</trim>
+		where user_id = #{userId} and subject_id = #{subjectId}
+	</update>
 
 </mapper>

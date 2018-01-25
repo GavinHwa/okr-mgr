@@ -43,7 +43,7 @@ public class MapperGenerator extends AbstractGenerator {
 		String filePath = super.getFilePath(table);
 		//String packagePath = super.getPackagePath(table);
 		StringBuilder path = new StringBuilder(filePath);
-		path.append("/conf/common/META-INF/spring/domain/mybatis/")
+		path.append("/conf/mybatis/")
 			.append(context.getEntity().getClazzName())
 			.append(".mapper.xml");
 		

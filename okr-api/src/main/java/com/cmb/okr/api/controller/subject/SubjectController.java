@@ -18,13 +18,16 @@ import com.cmb.okr.api.BaseController;
 import com.cmb.okr.api.controller.subject.vo.AddSubjectReq;
 import com.cmb.okr.api.controller.subject.vo.ChangeLeaderReq;
 import com.cmb.okr.api.controller.subject.vo.ChangeStatusReq;
+import com.cmb.okr.api.controller.subject.vo.DelMemReq;
 import com.cmb.okr.api.controller.subject.vo.LoadPageReq;
+import com.cmb.okr.api.controller.subject.vo.QuitSubjectReq;
 import com.cmb.okr.api.controller.subject.vo.SubjectResponse;
 import com.cmb.okr.api.util.ContextUtils;
 import com.cmb.okr.attachment.AttachmentService;
 import com.cmb.okr.dao.domain.auth.User;
 import com.cmb.okr.dao.domain.subject.Subject;
 import com.cmb.okr.frame.auth.AuthRequired;
+import com.cmb.okr.frame.auth.LoginRequired;
 import com.cmb.okr.frame.base.JsonResponse;
 import com.cmb.okr.frame.db.PagingParam;
 import com.cmb.okr.frame.db.PagingResult;
@@ -172,8 +175,73 @@ public class SubjectController extends BaseController {
 		}, "获取课题详情失败");
 	}
 
-	// TODO 邀请课题成员
-	// TODO 接受课题邀请
-	// TODO 退出课题
+	/**
+	 * 邀请成员
+	 * 
+	 * @param request
+	 * @param subjectId
+	 * @param memId
+	 * @return
+	 */
+	@LoginRequired
+	@ApiOperation(value = "邀请成员", notes = "只有课题负责人可以邀请")
+	@RequestMapping(value = "/invitemember/{subjectId}/{memId}", method = RequestMethod.POST)
+	@ApiImplicitParam(value = "okraccesstoken", paramType = "header", required = true, name = "okraccesstoken")
+	public JsonResponse inviteMember(HttpServletRequest request, @PathVariable("subjectId") String subjectId,
+			@PathVariable("memId") String memId) {
+		return doBusiness((res) -> {
+			User curUser = ContextUtils.getCurrentUser(request);
+			this.subjectService.inviteMember(curUser, subjectId, memId);
+		}, "邀请成员失败");
+	}
 
+	/**
+	 * 获取课题成员列表
+	 * 
+	 * @param subjectId
+	 * @return
+	 */
+	@ApiOperation(value = "获取课题成员列表")
+	@RequestMapping(value = "/member/invite/{subjectId}", method = RequestMethod.GET)
+	public JsonResponse loadSubjectMems(@PathVariable("subjectId") String subjectId) {
+		return doBusiness((res) -> {
+			res.setResult(this.subjectService.loadMems(subjectId));
+		}, "获取成员列表失败");
+	}
+	// TODO 接受课题邀请
+
+	/**
+	 * 退出课题
+	 * 
+	 * @param request
+	 * @param req
+	 * @return
+	 */
+	@LoginRequired
+	@ApiOperation(value = "退出课题")
+	@RequestMapping(value = "/quit", method = RequestMethod.POST)
+	@ApiImplicitParam(value = "okraccesstoken", paramType = "header", required = true, name = "okraccesstoken")
+	public JsonResponse quitSubject(HttpServletRequest request, @RequestBody QuitSubjectReq req) {
+		return doBusiness((res) -> {
+			User curUser = ContextUtils.getCurrentUser(request);
+			this.subjectService.quitSubject(req.getSubjectId(), curUser.getId(), req.getRemark());
+		}, "退出课题失败");
+	}
+
+	/**
+	 * 删除课题成员
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@LoginRequired
+	@ApiOperation(value = "删除课题成员", notes = "只有负责人可以操作")
+	@RequestMapping(value = "/emember/del", method = RequestMethod.POST)
+	@ApiImplicitParam(value = "okraccesstoken", paramType = "header", required = true, name = "okraccesstoken")
+	public JsonResponse delMember(HttpServletRequest request, @RequestBody DelMemReq req) {
+		return doBusiness((res) -> {
+			User curUser = ContextUtils.getCurrentUser(request);
+			this.subjectService.delMem(curUser, req.getSubjectId(), req.getMemId(), req.getRemark());
+		}, "删除课题成员失败");
+	}
 }

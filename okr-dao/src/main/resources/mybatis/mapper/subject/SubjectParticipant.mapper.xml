@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmb.okr.dao.domain.subject.SubjectParticipant">
+	<resultMap type="SubjectParticipant" id="baseResultMap">
+	<result property="id" column="id"  jdbcType="VARCHAR"/>
+		<result property="userId" column="user_id"  jdbcType="VARCHAR"/>
+		<result property="userName" column="user_name"  jdbcType="VARCHAR"/>
+		<result property="subjectId" column="subject_id"  jdbcType="VARCHAR"/>
+		<result property="isQuit" column="is_quit"  jdbcType="INTEGER"/>
+		<result property="joinDate" column="joinDate"  jdbcType="DATE"/>
+		<result property="quitDate" column="quitDate"  jdbcType="DATE"/>
+		<result property="quitRemark" column="quitRemark"  jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="selectSql">
+		SELECT
+			id AS id,
+			<trim prefix="" suffixOverrides=",">
+			user_id AS userId,
+			user_name AS userName,
+			subject_id AS subjectId,
+			is_quit AS isQuit,
+			joinDate AS joinDate,
+			quitDate AS quitDate,
+			quitRemark AS quitRemark,
+			</trim>
+		FROM subject_participant
+	</sql>
+	
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND id = #{id}
+			</if>
+			<if test="userId != null">
+				AND user_id = #{userId}
+			</if>
+			<if test="userName != null">
+				AND user_name = #{userName}
+			</if>
+			<if test="subjectId != null">
+				AND subject_id = #{subjectId}
+			</if>
+			<if test="isQuit != null">
+				AND is_quit = #{isQuit}
+			</if>
+			<if test="joinDate != null">
+				AND joinDate = #{joinDate}
+			</if>
+			<if test="quitDate != null">
+				AND quitDate = #{quitDate}
+			</if>
+			<if test="quitRemark != null">
+				AND quitRemark = #{quitRemark}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="whereSqlPaging">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="param.userId != null">
+				AND user_id = #{param.userId}
+			</if>
+			<if test="param.userName != null">
+				AND user_name = #{param.userName}
+			</if>
+			<if test="param.subjectId != null">
+				AND subject_id = #{param.subjectId}
+			</if>
+			<if test="param.isQuit != null">
+				AND is_quit = #{param.isQuit}
+			</if>
+			<if test="param.joinDate != null">
+				AND joinDate = #{param.joinDate}
+			</if>
+			<if test="param.quitDate != null">
+				AND quitDate = #{param.quitDate}
+			</if>
+			<if test="param.quitRemark != null">
+				AND quitRemark = #{param.quitRemark}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="updateSql">
+		UPDATE subject_participant
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>
+			<if test="userName != null">
+				user_name = #{userName},
+			</if>
+			<if test="subjectId != null">
+				subject_id = #{subjectId},
+			</if>
+			<if test="isQuit != null">
+				is_quit = #{isQuit},
+			</if>
+			<if test="joinDate != null">
+				joinDate = #{joinDate},
+			</if>
+			<if test="quitDate != null">
+				quitDate = #{quitDate},
+			</if>
+			<if test="quitRemark != null">
+				quitRemark = #{quitRemark},
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="deleteSql">
+		DELETE from subject_participant
+	</sql>
+
+	<sql id="insertColume">
+		<trim prefix="" suffixOverrides=",">
+			id,
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="subjectId != null">
+				subject_id,
+			</if>
+			<if test="isQuit != null">
+				is_quit,
+			</if>
+			<if test="joinDate != null">
+				joinDate,
+			</if>
+			<if test="quitDate != null">
+				quitDate,
+			</if>
+			<if test="quitRemark != null">
+				quitRemark,
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="insertValue">
+		<trim prefix="" suffixOverrides=",">
+		<if test="id != null">
+				#{id},
+			</if>
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="userName != null">
+				#{userName},
+			</if>
+			<if test="subjectId != null">
+				#{subjectId},
+			</if>
+			<if test="isQuit != null">
+				#{isQuit},
+			</if>
+			<if test="joinDate != null">
+				#{joinDate},
+			</if>
+			<if test="quitDate != null">
+				#{quitDate},
+			</if>
+			<if test="quitRemark != null">
+				#{quitRemark},
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="pagingSql">
+		<trim prefix="" suffixOverrides=",">
+			<if test="limit != null">
+				limit #{offset},#{limit}
+			</if>
+		</trim>
+	</sql>
+	
+	<insert id="insert" parameterType="SubjectParticipant" >
+		INSERT INTO subject_participant(
+			<include refid="insertColume"/>
+		) VALUE (
+			<include refid="insertValue"/>
+		)
+	</insert>
+	
+	<update id="update" parameterType="SubjectParticipant">
+		<include refid="updateSql" />
+		WHERE ID = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="SubjectParticipant">
+		<include refid="deleteSql" />
+		<include refid="whereSql" />
+	</delete>
+	
+	<select id="load" parameterType="SubjectParticipant" resultType="SubjectParticipant">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="queryForAll" parameterType="SubjectParticipant" resultType="SubjectParticipant">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="selectCount" parameterType="SubjectParticipant"
+		resultType="Integer">
+		SELECT COUNT(1) AS count FROM subject_participant
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="countForPage" parameterType="PagingParam"
+		resultType="Integer">
+		SELECT COUNT(1) AS count FROM subject_participant
+		<include refid="whereSqlPaging" />
+	</select>
+	
+	<select id="queryForPage" parameterType="PagingParam" resultType="SubjectParticipant">
+		<include refid="selectSql" />
+		<include refid="whereSqlPaging" />
+		<include refid="pagingSql" />
+	</select>
+	
+</mapper>
