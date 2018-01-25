@@ -111,5 +111,14 @@
 		a1.id
 		where a0.id = #{id}
 	</select>
+	
+	<select id="checkNameExists" parameterType="Subject" resultType="Integer">
+		select count(1) from subject where name = #{name}
+		<trim prefix="" suffixOverrides="AND">
+			<if test="id != null">
+				AND id != #{id}
+			</if>
+		</trim>
+	</select>
 
 </mapper>

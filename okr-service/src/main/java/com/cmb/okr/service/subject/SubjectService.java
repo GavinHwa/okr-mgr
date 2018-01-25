@@ -22,6 +22,7 @@ public class SubjectService {
 	private static final String COUNT_PAGE_SQL = "countForPage";
 	private static final String PAGE_SQL = "queryForPage";
 	private static final String LOAD_SUBJECT_DETAIL = "loadSubjectDetail";
+	private static final String CHECK_NAME_EXISTS = "checkNameExists";
 
 	@Autowired
 	BaseDao baseDao;
@@ -34,6 +35,9 @@ public class SubjectService {
 	 */
 	public Subject add(Subject subject) {
 		subject.setId(IdUtils.getUUID());
+		if(this.checkSubjectNameExists(null, subject.getName())){
+			throw new AppException("课题名称已经存在");
+		}
 		baseDao.insert(subject);
 		return subject;
 	}
@@ -124,11 +128,28 @@ public class SubjectService {
 
 	/**
 	 * 获取课题信息
+	 * 
 	 * @param id
 	 * @return
 	 */
 	public Object loadSubject(String id) {
 		return this.baseDao.load(SQL_PREFIX.concat(LOAD_SUBJECT_DETAIL), id);
+	}
+
+	/**
+	 * name唯一性校验
+	 * @param subjectId
+	 * @param name
+	 * @return
+	 */
+	public boolean checkSubjectNameExists(String subjectId, String name) {
+		if (StringUtils.isEmpty(name)) {
+			return false;
+		}
+		Subject queryEntity = new Subject();
+		queryEntity.setName(name);
+		int count = this.baseDao.selectCount(SQL_PREFIX.concat(CHECK_NAME_EXISTS), queryEntity);
+		return count > 0;
 	}
 
 }

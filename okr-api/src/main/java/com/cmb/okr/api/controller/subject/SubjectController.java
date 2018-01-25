@@ -47,6 +47,15 @@ public class SubjectController extends BaseController {
 	@Autowired
 	private AttachmentService attachmentService;
 
+	@ApiOperation(value = "检查课题名称是否存在", notes = "")
+	@RequestMapping(value = "/check/name/{name}/{id}", method = RequestMethod.GET)
+	public JsonResponse checkNameExists(@PathVariable("name") String name,
+			@PathVariable(value = "id", required = false) String id) {
+		return doBusiness((res) -> {
+			res.setResult(this.subjectService.checkSubjectNameExists(id, name));
+		}, "课题名称校验失败");
+	}
+
 	/**
 	 * 新增课题
 	 * 
