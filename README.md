@@ -13,6 +13,8 @@ okr后端部分
 
 4、打开url:http://localhost:8001/okr/swagger-ui.html
 
+5、
+
 ### 存储
 存储使用Ali云的oss，需要在配置文件中添加如下配置
 
