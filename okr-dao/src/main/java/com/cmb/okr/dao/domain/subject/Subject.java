@@ -73,6 +73,15 @@ private static final long serialVersionUID = 1L;
 	 */
 	private Date createTime;
 
+	/**
+	 *
+	 */
+	private String lastModifiedId;
+
+	/**
+	 *
+	 */
+	private Date lastModifiedTime;
 
 	/**
 	 * 课题名称
@@ -227,4 +236,32 @@ private static final long serialVersionUID = 1L;
 	public Date getCreateTime(){
 		return  createTime;
 	}
+
+    /**
+     *
+     */
+    public void setLastModifiedId(String lastModifiedId){
+        this.lastModifiedId = lastModifiedId;
+    }
+
+    /**
+     *
+     */
+    public String getLastModifiedId(){
+        return  lastModifiedId;
+    }
+
+    /**
+     *
+     */
+    public void setLastModifiedTime(Date lastModifiedTime){
+        this.lastModifiedTime = lastModifiedTime;
+    }
+
+    /**
+     *
+     */
+    public Date getLastModifiedTime(){
+        return  lastModifiedTime;
+    }
 }

@@ -13,8 +13,13 @@
 		<result property="nickName" column="nick_name"  jdbcType="VARCHAR"/>
 		<result property="ystCode" column="yst_code"  jdbcType="VARCHAR"/>
 		<result property="userType" column="user_type"  jdbcType="VARCHAR"/>
+		<result property="region" column="region"  jdbcType="VARCHAR"/>
+		<result property="createId" column="create_id"  jdbcType="VARCHAR"/>
+		<result property="createTime" column="create_time"  jdbcType="DATE"/>
+		<result property="lastModifiedId" column="last_modified_id"  jdbcType="VARCHAR"/>
+		<result property="lastModifiedTime" column="last_modified_time"  jdbcType="DATE"/>
 	</resultMap>
-	
+
 	<sql id="selectSql">
 		SELECT
 			id AS id,
@@ -29,6 +34,11 @@
 			nick_name AS nickName,
 			yst_code AS ystCode,
 			user_type AS userType,
+			region AS region,
+			create_id AS createId,
+			create_time AS createTime,
+			last_modified_id AS lastModifiedId,
+			last_modified_time AS lastModifiedTime,
 			</trim>
 		FROM user
 	</sql>
@@ -68,6 +78,21 @@
 			<if test="userType != null">
 				AND user_type = #{userType}
 			</if>
+			<if test="region != null">
+				AND region = #{region}
+			</if>
+			<if test="createId != null">
+				AND create_id = #{createId}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime}
+			</if>
+			<if test="lastModifiedId != null">
+				AND last_modified_id = #{lastModifiedId}
+			</if>
+			<if test="lastModifiedTime != null">
+				AND last_modified_time = #{lastModifiedTime}
+			</if>
 		</trim>
 	</sql>
 	
@@ -102,6 +127,21 @@
 			</if>
 			<if test="param.userType != null">
 				AND user_type = #{param.userType}
+			</if>
+			<if test="param.region != null">
+				AND region = #{param.region}
+			</if>
+			<if test="param.createId != null">
+				AND create_id = #{param.createId}
+			</if>
+			<if test="param.createTime != null">
+				AND create_time = #{param.createTime}
+			</if>
+			<if test="param.lastModifiedId != null">
+				AND last_modified_id = #{param.lastModifiedId}
+			</if>
+			<if test="param.lastModifiedTime != null">
+				AND last_modified_time = #{param.lastModifiedTime}
 			</if>
 		</trim>
 	</sql>
@@ -138,6 +178,21 @@
 			</if>
 			<if test="userType != null">
 				user_type = #{userType},
+			</if>
+			<if test="region != null">
+				region = #{region},
+			</if>
+			<if test="createId != null">
+				create_id = #{createId},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="lastModifiedId != null">
+				last_modified_id = #{lastModifiedId},
+			</if>
+			<if test="lastModifiedTime != null">
+				last_modified_time = #{lastModifiedTime},
 			</if>
 		</trim>
 	</sql>
@@ -179,6 +234,21 @@
 			<if test="userType != null">
 				user_type,
 			</if>
+			<if test="region != null">
+				region,
+			</if>
+			<if test="createId != null">
+				create_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastModifiedId != null">
+				last_modified_id,
+			</if>
+			<if test="lastModifiedTime != null">
+				last_modified_time,
+			</if>
 		</trim>
 	</sql>
 
@@ -216,6 +286,21 @@
 			</if>
 			<if test="userType != null">
 				#{userType},
+			</if>
+			<if test="region != null">
+				#{region},
+			</if>
+			<if test="createId != null">
+				#{createId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="lastModifiedId != null">
+				#{lastModifiedId},
+			</if>
+			<if test="lastModifiedTime != null">
+				#{lastModifiedTime},
 			</if>
 		</trim>
 	</sql>

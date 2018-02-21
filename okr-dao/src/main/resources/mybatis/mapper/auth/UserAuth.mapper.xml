@@ -5,6 +5,10 @@
 		<result property="id" column="id"  jdbcType="VARCHAR"/>
 		<result property="userId" column="user_id"  jdbcType="VARCHAR"/>
 		<result property="authId" column="auth_id"  jdbcType="VARCHAR"/>
+		<result property="createId" column="create_id"  jdbcType="VARCHAR"/>
+		<result property="createTime" column="create_time"  jdbcType="DATE"/>
+		<result property="lastModifiedId" column="last_modified_id"  jdbcType="VARCHAR"/>
+		<result property="lastModifiedTime" column="last_modified_time"  jdbcType="DATE"/>
 	</resultMap>
 	
 	<sql id="selectSql">
@@ -13,6 +17,10 @@
 			<trim prefix="" suffixOverrides=",">
 			user_id AS userId,
 			auth_id AS authId,
+			create_id AS createId,
+			create_time AS createTime,
+			last_modified_id AS lastModifiedId,
+			last_modified_time AS lastModifiedTime,
 			</trim>
 		FROM user_auth
 	</sql>
@@ -28,6 +36,18 @@
 			<if test="authId != null">
 				AND auth_id = #{authId}
 			</if>
+			<if test="createId != null">
+				AND create_id = #{createId}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime}
+			</if>
+			<if test="lastModifiedId != null">
+				AND last_modified_id = #{lastModifiedId}
+			</if>
+			<if test="lastModifiedTime != null">
+				AND last_modified_time = #{lastModifiedTime}
+			</if>
 		</trim>
 	</sql>
 	
@@ -38,6 +58,18 @@
 			</if>
 			<if test="param.authId != null">
 				AND auth_id = #{param.authId}
+			</if>
+			<if test="param.createId != null">
+				AND create_id = #{param.createId}
+			</if>
+			<if test="param.createTime != null">
+				AND create_time = #{param.createTime}
+			</if>
+			<if test="param.lastModifiedId != null">
+				AND last_modified_id = #{param.lastModifiedId}
+			</if>
+			<if test="param.lastModifiedTime != null">
+				AND last_modified_time = #{param.lastModifiedTime}
 			</if>
 		</trim>
 	</sql>
@@ -50,6 +82,18 @@
 			</if>
 			<if test="authId != null">
 				auth_id = #{authId},
+			</if>
+			<if test="createId != null">
+				create_id = #{createId},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="lastModifiedId != null">
+				last_modified_id = #{lastModifiedId},
+			</if>
+			<if test="lastModifiedTime != null">
+				last_modified_time = #{lastModifiedTime},
 			</if>
 		</trim>
 	</sql>
@@ -67,6 +111,18 @@
 			<if test="authId != null">
 				auth_id,
 			</if>
+			<if test="createId != null">
+				create_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastModifiedId != null">
+				last_modified_id,
+			</if>
+			<if test="lastModifiedTime != null">
+				last_modified_time,
+			</if>
 		</trim>
 	</sql>
 
@@ -77,6 +133,18 @@
 			</if>
 			<if test="authId != null">
 				#{authId},
+			</if>
+			<if test="createId != null">
+				#{createId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="lastModifiedId != null">
+				#{lastModifiedId},
+			</if>
+			<if test="lastModifiedTime != null">
+				#{lastModifiedTime},
 			</if>
 		</trim>
 	</sql>

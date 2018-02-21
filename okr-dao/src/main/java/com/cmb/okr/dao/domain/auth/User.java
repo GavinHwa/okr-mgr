@@ -2,16 +2,17 @@ package com.cmb.okr.dao.domain.auth;
 
 import com.cmb.okr.dao.enums.UserType;
 import com.cmb.okr.frame.db.BaseEntity;
+import java.util.Date;
 
 /**
  * 该类是映射到表的实体类，负责与表进行一一对应。
- * @author: huang 
+ * @author: huang
  * @date: 2018-01-19 08:22:31
  * @since 1.0.0
  */
 public class User extends BaseEntity {
 private static final long serialVersionUID = 1L;
-	
+
 
 	/**
 	 * 姓名
@@ -27,7 +28,7 @@ private static final long serialVersionUID = 1L;
 	 * 密码
 	 */
 	private String password;
-	
+
 	private String salt;
 
 	/**
@@ -62,6 +63,30 @@ private static final long serialVersionUID = 1L;
 	 */
 	private UserType userType;
 
+	/**
+	 *
+	 */
+	private String region;
+
+	/**
+	 *
+	 */
+	private String createId;
+
+	/**
+	 *
+	 */
+	private Date createTime;
+
+	/**
+	 *
+	 */
+	private String lastModifiedId;
+
+	/**
+	 *
+	 */
+	private Date lastModifiedTime;
 
 	/**
 	 * 姓名
@@ -69,7 +94,7 @@ private static final long serialVersionUID = 1L;
 	public void setName(String name){
 		this.name = name;
 	}
-	
+
 	/**
 	 * 姓名
 	 */
@@ -83,7 +108,7 @@ private static final long serialVersionUID = 1L;
 	public void setLoginName(String loginName){
 		this.loginName = loginName;
 	}
-	
+
 	/**
 	 * 登录名
 	 */
@@ -97,7 +122,7 @@ private static final long serialVersionUID = 1L;
 	public void setPassword(String password){
 		this.password = password;
 	}
-	
+
 	/**
 	 * 密码
 	 */
@@ -111,7 +136,7 @@ private static final long serialVersionUID = 1L;
 	public void setIcon(String icon){
 		this.icon = icon;
 	}
-	
+
 	/**
 	 * 头像
 	 */
@@ -125,7 +150,7 @@ private static final long serialVersionUID = 1L;
 	public void setPhone(String phone){
 		this.phone = phone;
 	}
-	
+
 	/**
 	 * 手机号码
 	 */
@@ -139,7 +164,7 @@ private static final long serialVersionUID = 1L;
 	public void setEmail(String email){
 		this.email = email;
 	}
-	
+
 	/**
 	 * 邮箱
 	 */
@@ -153,7 +178,7 @@ private static final long serialVersionUID = 1L;
 	public void setNickName(String nickName){
 		this.nickName = nickName;
 	}
-	
+
 	/**
 	 * 昵称
 	 */
@@ -167,7 +192,7 @@ private static final long serialVersionUID = 1L;
 	public void setYstCode(String ystCode){
 		this.ystCode = ystCode;
 	}
-	
+
 	/**
 	 * 移事通号
 	 */
@@ -183,7 +208,7 @@ private static final long serialVersionUID = 1L;
 	public void setUserType(UserType userType){
 		this.userType = userType;
 	}
-	
+
 	/**
 	 * 用户类型
             admin:管理员
@@ -200,4 +225,75 @@ private static final long serialVersionUID = 1L;
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
+
+	/**
+	 *
+	 */
+	public void setRegion(String region){
+		this.region = region;
+	}
+
+	/**
+	 *
+	 */
+	public String getRegion(){
+		return  region;
+	}
+
+	/**
+	 *
+	 */
+	public void setCreateId(String createId){
+		this.createId = createId;
+	}
+
+	/**
+	 *
+	 */
+	public String getCreateId(){
+		return  createId;
+	}
+
+	/**
+	 *
+	 */
+	public void setCreateTime(Date createTime){
+		this.createTime = createTime;
+	}
+
+	/**
+	 *
+	 */
+	public Date getCreateTime(){
+		return  createTime;
+	}
+
+	/**
+	 *
+	 */
+	public void setLastModifiedId(String lastModifiedId){
+		this.lastModifiedId = lastModifiedId;
+	}
+
+	/**
+	 *
+	 */
+	public String getLastModifiedId(){
+		return  lastModifiedId;
+	}
+
+	/**
+	 *
+	 */
+	public void setLastModifiedTime(Date lastModifiedTime){
+		this.lastModifiedTime = lastModifiedTime;
+	}
+
+	/**
+	 *
+	 */
+	public Date getLastModifiedTime(){
+		return  lastModifiedTime;
+	}
+
 }

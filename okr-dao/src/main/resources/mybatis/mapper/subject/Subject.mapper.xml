@@ -13,6 +13,8 @@
 		<result property="startupDate" column="startup_date"  jdbcType="DATE"/>
 		<result property="createId" column="create_id"  jdbcType="VARCHAR"/>
 		<result property="createTime" column="create_time"  jdbcType="DATE"/>
+		<result property="lastModifiedId" column="last_modified_id"  jdbcType="VARCHAR"/>
+		<result property="lastModifiedTime" column="last_modified_time"  jdbcType="DATE"/>
 	</resultMap>
 	
 	<sql id="selectSql">
@@ -29,6 +31,8 @@
 			startup_date AS startupDate,
 			create_id AS createId,
 			create_time AS createTime,
+			last_modified_id AS lastModifiedId,
+			last_modified_time AS lastModifiedTime,
 			</trim>
 		FROM subject
 	</sql>
@@ -68,6 +72,12 @@
 			<if test="createTime != null">
 				AND create_time = #{createTime}
 			</if>
+			<if test="lastModifiedId != null">
+				AND last_modified_id = #{lastModifiedId}
+			</if>
+			<if test="lastModifiedTime != null">
+				AND last_modified_time = #{lastModifiedTime}
+			</if>
 		</trim>
 	</sql>
 	
@@ -102,6 +112,12 @@
 			</if>
 			<if test="param.createTime != null">
 				AND create_time = #{param.createTime}
+			</if>
+			<if test="param.lastModifiedId != null">
+				AND last_modified_id = #{param.lastModifiedId}
+			</if>
+			<if test="param.lastModifiedTime != null">
+				AND last_modified_time = #{param.lastModifiedTime}
 			</if>
 		</trim>
 	</sql>
@@ -138,6 +154,12 @@
 			</if>
 			<if test="createTime != null">
 				create_time = #{createTime},
+			</if>
+			<if test="lastModifiedId != null">
+				last_modified_id = #{lastModifiedId},
+			</if>
+			<if test="lastModifiedTime != null">
+				last_modified_time = #{lastModifiedTime},
 			</if>
 		</trim>
 	</sql>
@@ -181,6 +203,12 @@
 			<if test="createTime != null">
 				create_time,
 			</if>
+			<if test="lastModifiedId != null">
+				last_modified_id,
+			</if>
+			<if test="lastModifiedTime != null">
+				last_modified_time,
+			</if>
 		</trim>
 	</sql>
 
@@ -218,6 +246,12 @@
 			</if>
 			<if test="createTime != null">
 				#{createTime},
+			</if>
+			<if test="lastModifiedId != null">
+				#{lastModifiedId},
+			</if>
+			<if test="lastModifiedTime != null">
+				#{lastModifiedTime},
 			</if>
 		</trim>
 	</sql>
