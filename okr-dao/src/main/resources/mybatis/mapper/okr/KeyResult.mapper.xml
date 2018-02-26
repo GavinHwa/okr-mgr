@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmb.okr.dao.domain.okr.KeyResult">
+	<resultMap type="KeyResult" id="baseResultMap">
+	<result property="id" column="id"  jdbcType="VARCHAR"/>
+		<result property="objectiveId" column="objective_id"  jdbcType="VARCHAR"/>
+		<result property="resultInfo" column="result_info"  jdbcType="VARCHAR"/>
+		<result property="weight" column="weight"  jdbcType="INTEGER"/>
+		<result property="progress" column="progress"  jdbcType="INTEGER"/>
+		<result property="confidenceIndex" column="confidence_index"  jdbcType="VARCHAR"/>
+		<result property="lastModifiedTime" column="last_modified_time"  jdbcType="DATE"/>
+		<result property="createTime" column="create_time"  jdbcType="DATE"/>
+	</resultMap>
+	
+	<sql id="selectSql">
+		SELECT
+			id AS id,
+			<trim prefix="" suffixOverrides=",">
+			objective_id AS objectiveId,
+			result_info AS resultInfo,
+			weight AS weight,
+			progress AS progress,
+			confidence_index AS confidenceIndex,
+			last_modified_time AS lastModifiedTime,
+			create_time AS createTime,
+			</trim>
+		FROM key_result
+	</sql>
+	
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND id = #{id}
+			</if>
+			<if test="objectiveId != null">
+				AND objective_id = #{objectiveId}
+			</if>
+			<if test="resultInfo != null">
+				AND result_info = #{resultInfo}
+			</if>
+			<if test="weight != null">
+				AND weight = #{weight}
+			</if>
+			<if test="progress != null">
+				AND progress = #{progress}
+			</if>
+			<if test="confidenceIndex != null">
+				AND confidence_index = #{confidenceIndex}
+			</if>
+			<if test="lastModifiedTime != null">
+				AND last_modified_time = #{lastModifiedTime}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="whereSqlPaging">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="param.objectiveId != null">
+				AND objective_id = #{param.objectiveId}
+			</if>
+			<if test="param.resultInfo != null">
+				AND result_info = #{param.resultInfo}
+			</if>
+			<if test="param.weight != null">
+				AND weight = #{param.weight}
+			</if>
+			<if test="param.progress != null">
+				AND progress = #{param.progress}
+			</if>
+			<if test="param.confidenceIndex != null">
+				AND confidence_index = #{param.confidenceIndex}
+			</if>
+			<if test="param.lastModifiedTime != null">
+				AND last_modified_time = #{param.lastModifiedTime}
+			</if>
+			<if test="param.createTime != null">
+				AND create_time = #{param.createTime}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="updateSql">
+		UPDATE key_result
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="objectiveId != null">
+				objective_id = #{objectiveId},
+			</if>
+			<if test="resultInfo != null">
+				result_info = #{resultInfo},
+			</if>
+			<if test="weight != null">
+				weight = #{weight},
+			</if>
+			<if test="progress != null">
+				progress = #{progress},
+			</if>
+			<if test="confidenceIndex != null">
+				confidence_index = #{confidenceIndex},
+			</if>
+			<if test="lastModifiedTime != null">
+				last_modified_time = #{lastModifiedTime},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="deleteSql">
+		DELETE from key_result
+	</sql>
+
+	<sql id="insertColume">
+		<trim prefix="" suffixOverrides=",">
+			id,
+			<if test="objectiveId != null">
+				objective_id,
+			</if>
+			<if test="resultInfo != null">
+				result_info,
+			</if>
+			<if test="weight != null">
+				weight,
+			</if>
+			<if test="progress != null">
+				progress,
+			</if>
+			<if test="confidenceIndex != null">
+				confidence_index,
+			</if>
+			<if test="lastModifiedTime != null">
+				last_modified_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="insertValue">
+		<trim prefix="" suffixOverrides=",">
+		<if test="id != null">
+				#{id},
+			</if>
+			<if test="objectiveId != null">
+				#{objectiveId},
+			</if>
+			<if test="resultInfo != null">
+				#{resultInfo},
+			</if>
+			<if test="weight != null">
+				#{weight},
+			</if>
+			<if test="progress != null">
+				#{progress},
+			</if>
+			<if test="confidenceIndex != null">
+				#{confidenceIndex},
+			</if>
+			<if test="lastModifiedTime != null">
+				#{lastModifiedTime},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="pagingSql">
+		<trim prefix="" suffixOverrides=",">
+			<if test="limit != null">
+				limit #{offset},#{limit}
+			</if>
+		</trim>
+	</sql>
+	
+	<insert id="insert" parameterType="KeyResult" >
+		INSERT INTO key_result(
+			<include refid="insertColume"/>
+		) VALUE (
+			<include refid="insertValue"/>
+		)
+	</insert>
+	
+	<update id="update" parameterType="KeyResult">
+		<include refid="updateSql" />
+		WHERE ID = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="KeyResult">
+		<include refid="deleteSql" />
+		<include refid="whereSql" />
+	</delete>
+	
+	<select id="load" parameterType="KeyResult" resultType="KeyResult">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="queryForAll" parameterType="KeyResult" resultType="KeyResult">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="selectCount" parameterType="KeyResult"
+		resultType="Integer">
+		SELECT COUNT(1) AS count FROM key_result
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="countForPage" parameterType="PagingParam"
+		resultType="Integer">
+		SELECT COUNT(1) AS count FROM key_result
+		<include refid="whereSqlPaging" />
+	</select>
+	
+	<select id="queryForPage" parameterType="PagingParam" resultType="KeyResult">
+		<include refid="selectSql" />
+		<include refid="whereSqlPaging" />
+		<include refid="pagingSql" />
+	</select>
+	
+</mapper>

@@ -96,6 +96,23 @@ public class SubjectService {
 	}
 
 	/**
+	 * 校验用户是否为课题负责人
+	 * 
+	 * @param subjectId
+	 * @param userId
+	 * @return
+	 */
+	public boolean checkIsLeader(String subjectId, String userId) {
+		Subject query = new Subject();
+		query.setId(subjectId);
+		Subject sbj = this.baseDao.load(SQL_PREFIX.concat(LOAD_FOR_CHECK), query);
+		if (sbj == null) {
+			throw new AppException("课题信息不存在");
+		}
+		return sbj.getLeaderId().equals(userId);
+	}
+
+	/**
 	 * 修改课题图标
 	 * 
 	 * @param curUser

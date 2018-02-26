@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmb.okr.dao.domain.okr.ObjectiveInfo">
+	<resultMap type="ObjectiveInfo" id="baseResultMap">
+	<result property="id" column="id"  jdbcType="VARCHAR"/>
+		<result property="subjectId" column="subject_id"  jdbcType="VARCHAR"/>
+		<result property="parentId" column="parent_id"  jdbcType="VARCHAR"/>
+		<result property="objectiveContent" column="objective_content"  jdbcType="VARCHAR"/>
+		<result property="objectiveType" column="objective_type"  jdbcType="VARCHAR"/>
+		<result property="startDate" column="start_date"  jdbcType="DATE"/>
+		<result property="endDate" column="end_date"  jdbcType="DATE"/>
+		<result property="createId" column="create_id"  jdbcType="VARCHAR"/>
+		<result property="createTime" column="create_time"  jdbcType="DATE"/>
+		<result property="lastModifiedTime" column="last_modified_time"  jdbcType="DATE"/>
+	</resultMap>
+	
+	<sql id="selectSql">
+		SELECT
+			id AS id,
+			<trim prefix="" suffixOverrides=",">
+			subject_id AS subjectId,
+			parent_id AS parentId,
+			objective_content AS objectiveContent,
+			objective_type AS objectiveType,
+			start_date AS startDate,
+			end_date AS endDate,
+			create_id AS createId,
+			create_time AS createTime,
+			last_modified_time AS lastModifiedTime,
+			</trim>
+		FROM objective_info
+	</sql>
+	
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND id = #{id}
+			</if>
+			<if test="subjectId != null">
+				AND subject_id = #{subjectId}
+			</if>
+			<if test="parentId != null">
+				AND parent_id = #{parentId}
+			</if>
+			<if test="objectiveContent != null">
+				AND objective_content = #{objectiveContent}
+			</if>
+			<if test="objectiveType != null">
+				AND objective_type = #{objectiveType}
+			</if>
+			<if test="startDate != null">
+				AND start_date = #{startDate}
+			</if>
+			<if test="endDate != null">
+				AND end_date = #{endDate}
+			</if>
+			<if test="createId != null">
+				AND create_id = #{createId}
+			</if>
+			<if test="createTime != null">
+				AND create_time = #{createTime}
+			</if>
+			<if test="lastModifiedTime != null">
+				AND last_modified_time = #{lastModifiedTime}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="whereSqlPaging">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="param.subjectId != null">
+				AND subject_id = #{param.subjectId}
+			</if>
+			<if test="param.parentId != null">
+				AND parent_id = #{param.parentId}
+			</if>
+			<if test="param.objectiveContent != null">
+				AND objective_content = #{param.objectiveContent}
+			</if>
+			<if test="param.objectiveType != null">
+				AND objective_type = #{param.objectiveType}
+			</if>
+			<if test="param.startDate != null">
+				AND start_date = #{param.startDate}
+			</if>
+			<if test="param.endDate != null">
+				AND end_date = #{param.endDate}
+			</if>
+			<if test="param.createId != null">
+				AND create_id = #{param.createId}
+			</if>
+			<if test="param.createTime != null">
+				AND create_time = #{param.createTime}
+			</if>
+			<if test="param.lastModifiedTime != null">
+				AND last_modified_time = #{param.lastModifiedTime}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="updateSql">
+		UPDATE objective_info
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="subjectId != null">
+				subject_id = #{subjectId},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId},
+			</if>
+			<if test="objectiveContent != null">
+				objective_content = #{objectiveContent},
+			</if>
+			<if test="objectiveType != null">
+				objective_type = #{objectiveType},
+			</if>
+			<if test="startDate != null">
+				start_date = #{startDate},
+			</if>
+			<if test="endDate != null">
+				end_date = #{endDate},
+			</if>
+			<if test="createId != null">
+				create_id = #{createId},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="lastModifiedTime != null">
+				last_modified_time = #{lastModifiedTime},
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="deleteSql">
+		DELETE from objective_info
+	</sql>
+
+	<sql id="insertColume">
+		<trim prefix="" suffixOverrides=",">
+			id,
+			<if test="subjectId != null">
+				subject_id,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="objectiveContent != null">
+				objective_content,
+			</if>
+			<if test="objectiveType != null">
+				objective_type,
+			</if>
+			<if test="startDate != null">
+				start_date,
+			</if>
+			<if test="endDate != null">
+				end_date,
+			</if>
+			<if test="createId != null">
+				create_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="lastModifiedTime != null">
+				last_modified_time,
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="insertValue">
+		<trim prefix="" suffixOverrides=",">
+		<if test="id != null">
+				#{id},
+			</if>
+			<if test="subjectId != null">
+				#{subjectId},
+			</if>
+			<if test="parentId != null">
+				#{parentId},
+			</if>
+			<if test="objectiveContent != null">
+				#{objectiveContent},
+			</if>
+			<if test="objectiveType != null">
+				#{objectiveType},
+			</if>
+			<if test="startDate != null">
+				#{startDate},
+			</if>
+			<if test="endDate != null">
+				#{endDate},
+			</if>
+			<if test="createId != null">
+				#{createId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="lastModifiedTime != null">
+				#{lastModifiedTime},
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="pagingSql">
+		<trim prefix="" suffixOverrides=",">
+			<if test="limit != null">
+				limit #{offset},#{limit}
+			</if>
+		</trim>
+	</sql>
+	
+	<insert id="insert" parameterType="ObjectiveInfo" >
+		INSERT INTO objective_info(
+			<include refid="insertColume"/>
+		) VALUE (
+			<include refid="insertValue"/>
+		)
+	</insert>
+	
+	<update id="update" parameterType="ObjectiveInfo">
+		<include refid="updateSql" />
+		WHERE ID = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="ObjectiveInfo">
+		<include refid="deleteSql" />
+		<include refid="whereSql" />
+	</delete>
+	
+	<select id="load" parameterType="ObjectiveInfo" resultType="ObjectiveInfo">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="queryForAll" parameterType="ObjectiveInfo" resultType="ObjectiveInfo">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="selectCount" parameterType="ObjectiveInfo"
+		resultType="Integer">
+		SELECT COUNT(1) AS count FROM objective_info
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="countForPage" parameterType="PagingParam"
+		resultType="Integer">
+		SELECT COUNT(1) AS count FROM objective_info
+		<include refid="whereSqlPaging" />
+	</select>
+	
+	<select id="queryForPage" parameterType="PagingParam" resultType="ObjectiveInfo">
+		<include refid="selectSql" />
+		<include refid="whereSqlPaging" />
+		<include refid="pagingSql" />
+	</select>
+	
+</mapper>

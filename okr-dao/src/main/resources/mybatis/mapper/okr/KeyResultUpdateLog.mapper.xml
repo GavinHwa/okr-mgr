@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmb.okr.dao.domain.okr.KeyResultUpdateLog">
+	<resultMap type="KeyResultUpdateLog" id="baseResultMap">
+	<result property="id" column="id"  jdbcType="VARCHAR"/>
+		<result property="keyResultId" column="key_result_id"  jdbcType="VARCHAR"/>
+		<result property="progressBefore" column="progress_before"  jdbcType="INTEGER"/>
+		<result property="progressAfter" column="progress_after"  jdbcType="INTEGER"/>
+		<result property="remark" column="remark"  jdbcType="VARCHAR"/>
+		<result property="updateDate" column="update_date"  jdbcType="DATE"/>
+	</resultMap>
+	
+	<sql id="selectSql">
+		SELECT
+			id AS id,
+			<trim prefix="" suffixOverrides=",">
+			key_result_id AS keyResultId,
+			progress_before AS progressBefore,
+			progress_after AS progressAfter,
+			remark AS remark,
+			update_date AS updateDate,
+			</trim>
+		FROM key_result_update_log
+	</sql>
+	
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id != null">
+				AND id = #{id}
+			</if>
+			<if test="keyResultId != null">
+				AND key_result_id = #{keyResultId}
+			</if>
+			<if test="progressBefore != null">
+				AND progress_before = #{progressBefore}
+			</if>
+			<if test="progressAfter != null">
+				AND progress_after = #{progressAfter}
+			</if>
+			<if test="remark != null">
+				AND remark = #{remark}
+			</if>
+			<if test="updateDate != null">
+				AND update_date = #{updateDate}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="whereSqlPaging">
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="param.keyResultId != null">
+				AND key_result_id = #{param.keyResultId}
+			</if>
+			<if test="param.progressBefore != null">
+				AND progress_before = #{param.progressBefore}
+			</if>
+			<if test="param.progressAfter != null">
+				AND progress_after = #{param.progressAfter}
+			</if>
+			<if test="param.remark != null">
+				AND remark = #{param.remark}
+			</if>
+			<if test="param.updateDate != null">
+				AND update_date = #{param.updateDate}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="updateSql">
+		UPDATE key_result_update_log
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="keyResultId != null">
+				key_result_id = #{keyResultId},
+			</if>
+			<if test="progressBefore != null">
+				progress_before = #{progressBefore},
+			</if>
+			<if test="progressAfter != null">
+				progress_after = #{progressAfter},
+			</if>
+			<if test="remark != null">
+				remark = #{remark},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate},
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="deleteSql">
+		DELETE from key_result_update_log
+	</sql>
+
+	<sql id="insertColume">
+		<trim prefix="" suffixOverrides=",">
+			id,
+			<if test="keyResultId != null">
+				key_result_id,
+			</if>
+			<if test="progressBefore != null">
+				progress_before,
+			</if>
+			<if test="progressAfter != null">
+				progress_after,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="insertValue">
+		<trim prefix="" suffixOverrides=",">
+		<if test="id != null">
+				#{id},
+			</if>
+			<if test="keyResultId != null">
+				#{keyResultId},
+			</if>
+			<if test="progressBefore != null">
+				#{progressBefore},
+			</if>
+			<if test="progressAfter != null">
+				#{progressAfter},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate},
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="pagingSql">
+		<trim prefix="" suffixOverrides=",">
+			<if test="limit != null">
+				limit #{offset},#{limit}
+			</if>
+		</trim>
+	</sql>
+	
+	<insert id="insert" parameterType="KeyResultUpdateLog" >
+		INSERT INTO key_result_update_log(
+			<include refid="insertColume"/>
+		) VALUE (
+			<include refid="insertValue"/>
+		)
+	</insert>
+	
+	<update id="update" parameterType="KeyResultUpdateLog">
+		<include refid="updateSql" />
+		WHERE ID = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="KeyResultUpdateLog">
+		<include refid="deleteSql" />
+		<include refid="whereSql" />
+	</delete>
+	
+	<select id="load" parameterType="KeyResultUpdateLog" resultType="KeyResultUpdateLog">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="queryForAll" parameterType="KeyResultUpdateLog" resultType="KeyResultUpdateLog">
+		<include refid="selectSql" />
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="selectCount" parameterType="KeyResultUpdateLog"
+		resultType="Integer">
+		SELECT COUNT(1) AS count FROM key_result_update_log
+		<include refid="whereSql" />
+	</select>
+	
+	<select id="countForPage" parameterType="PagingParam"
+		resultType="Integer">
+		SELECT COUNT(1) AS count FROM key_result_update_log
+		<include refid="whereSqlPaging" />
+	</select>
+	
+	<select id="queryForPage" parameterType="PagingParam" resultType="KeyResultUpdateLog">
+		<include refid="selectSql" />
+		<include refid="whereSqlPaging" />
+		<include refid="pagingSql" />
+	</select>
+	
+</mapper>
